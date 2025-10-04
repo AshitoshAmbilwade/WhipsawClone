@@ -1,9 +1,13 @@
-// src/api/blogApi.js
 import apiHelper from "./apiHelper";
 
-const getAuthHeader = () => {
-  const token = localStorage.getItem("token");
-  return { headers: { Authorization: `Bearer ${token}` } };
+// Helper to attach Authorization header
+const getAuthHeader = (isMultipart = false) => {
+  const token = localStorage.getItem("token"); // JWT token from login
+  if (!token) throw new Error("No token found, please login");
+  
+  const headers = { Authorization: `Bearer ${token}` };
+  if (isMultipart) headers["Content-Type"] = "multipart/form-data";
+  return { headers };
 };
 
 export const getAllPosts = async () => {
@@ -11,13 +15,13 @@ export const getAllPosts = async () => {
   return data;
 };
 
-export const createPost = async (post) => {
-  const { data } = await apiHelper.post("/blog", post, getAuthHeader());
+export const createPost = async (post, isMultipart = false) => {
+  const { data } = await apiHelper.post("/blog", post, getAuthHeader(isMultipart));
   return data;
 };
 
-export const updatePost = async (id, post) => {
-  const { data } = await apiHelper.put(`/blog/${id}`, post, getAuthHeader());
+export const updatePost = async (id, post, isMultipart = false) => {
+  const { data } = await apiHelper.put(`/blog/${id}`, post, getAuthHeader(isMultipart));
   return data;
 };
 
