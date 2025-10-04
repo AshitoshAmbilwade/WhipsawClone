@@ -1,13 +1,12 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { sendContactForm as sendContactFormApi } from "../api/contactApi";
 
 function ContactForm() {
   const [formData, setFormData] = useState({ 
     name: "", 
     email: "", 
-    company: "",
-    subject: "",
     message: "" 
   });
   const [status, setStatus] = useState("");
@@ -38,12 +37,9 @@ function ContactForm() {
     }
 
     try {
-      // Simulate API call - replace with your actual API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      // await sendContactForm(formData);
-      
+      await sendContactFormApi(formData);
       setStatus("Thank you! Your message has been sent successfully.");
-      setFormData({ name: "", email: "", company: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       setStatus("Sorry, there was an error sending your message. Please try again.");
     } finally {
@@ -76,9 +72,7 @@ function ContactForm() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
+      transition: { staggerChildren: 0.2 }
     }
   };
 
@@ -87,10 +81,7 @@ function ContactForm() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.8, ease: "easeOut" }
     }
   };
 
@@ -125,10 +116,7 @@ function ContactForm() {
             <span className="text-gray-400">Something Amazing</span>
           </motion.h3>
 
-          <motion.div
-            variants={itemVariants}
-            className="max-w-2xl mx-auto"
-          >
+          <motion.div variants={itemVariants} className="max-w-2xl mx-auto">
             <p className="text-xl text-gray-600 leading-relaxed">
               Ready to bring your vision to life? Let's discuss how we can help 
               transform your ideas into exceptional products and experiences.
@@ -145,7 +133,7 @@ function ContactForm() {
             animate={isInView ? "visible" : "hidden"}
             className="space-y-12"
           >
-            {contactInfo.map((info, index) => (
+            {contactInfo.map((info) => (
               <motion.div
                 key={info.title}
                 variants={itemVariants}
@@ -183,19 +171,18 @@ function ContactForm() {
                 Follow Our Work
               </h4>
               <div className="flex space-x-6">
-                {[
-                  { icon: <FaLinkedin />, label: "LinkedIn", url: "#" },
-                  { icon: <FaTwitter />, label: "Twitter", url: "#" }
-                ].map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.url}
-                    className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-all duration-300"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {social.icon}
-                  </motion.a>
+                {[{ icon: <FaLinkedin />, label: "LinkedIn", url: "#" },
+                  { icon: <FaTwitter />, label: "Twitter", url: "#" }]
+                  .map((social) => (
+                    <motion.a
+                      key={social.label}
+                      href={social.url}
+                      className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {social.icon}
+                    </motion.a>
                 ))}
               </div>
             </motion.div>
@@ -212,74 +199,36 @@ function ContactForm() {
               className="space-y-8"
               variants={itemVariants}
             >
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-3">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-3">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                    placeholder="your.email@company.com"
-                  />
-                </div>
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-3">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
+                  placeholder="Your full name"
+                />
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-3">
-                    Company
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                    placeholder="Your company"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-3">
-                    Subject
-                  </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="new-project">New Project</option>
-                    <option value="partnership">Partnership</option>
-                    <option value="careers">Careers</option>
-                    <option value="general">General Inquiry</option>
-                  </select>
-                </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-3">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
+                  placeholder="your.email@company.com"
+                />
               </div>
 
               <div>
@@ -294,7 +243,7 @@ function ContactForm() {
                   required
                   rows="6"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 resize-none"
-                  placeholder="Tell us about your project, timeline, and budget..."
+                  placeholder="Tell us about your project..."
                 />
               </div>
 
@@ -361,8 +310,6 @@ function ContactForm() {
             backgroundSize: '80px 80px',
           }}
         />
-        
-        {/* Corner accents */}
         <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-gray-100"></div>
         <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-gray-100"></div>
       </div>
