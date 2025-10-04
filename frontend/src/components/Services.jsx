@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import {useNavigate} from 'react-router-dom';
 
 function Services() {
+  const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, threshold: 0.3 });
   const [activeFilter, setActiveFilter] = useState("all");
@@ -357,6 +359,7 @@ function Services() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="px-8 py-4 bg-gray-900 text-white font-medium text-lg transition-all duration-300 hover:bg-gray-800"
+                onClick ={()=>navigate("/contact")}
               >
                 Start a Project
               </motion.button>

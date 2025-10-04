@@ -14,7 +14,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Simplified links matching Whipsaw's actual navigation
   const links = [
     { name: "Hero", to: "Hero", type: "link" },
     { name: "About", to: "about", type: "link" },
@@ -59,7 +58,6 @@ function Navbar() {
             className="flex items-center gap-2 cursor-pointer group"
           >
             <div className="relative">
-              {/* Simple logo text */}
               <motion.div
                 className={`text-xl lg:text-2xl font-bold tracking-tight ${
                   scrolled ? "text-gray-900" : "text-white"
@@ -68,7 +66,6 @@ function Navbar() {
                 WHIPSAW
               </motion.div>
               
-              {/* Subtle accent */}
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 3, repeat: Infinity }}
@@ -76,7 +73,6 @@ function Navbar() {
               />
             </div>
 
-            {/* Minimal icon */}
             <motion.div
               animate={{ rotate: [0, 15, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
@@ -86,7 +82,7 @@ function Navbar() {
             </motion.div>
           </motion.div>
 
-          {/* Desktop Navigation - Clean and minimal */}
+          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center">
             <motion.div
               variants={containerVariants}
@@ -95,34 +91,48 @@ function Navbar() {
               className="flex items-center gap-12"
             >
               {links.map((link) => (
-                <motion.div
-                  key={link.name}
-                  variants={itemVariants}
-                >
-                  <Link
-                    to={link.to}
-                    smooth={true}
-                    duration={800}
-                    className={`relative font-medium text-sm tracking-wide transition-all duration-300 group ${
-                      scrolled 
-                        ? "text-gray-700 hover:text-gray-900" 
-                        : "text-white/90 hover:text-white"
-                    }`}
-                  >
-                    {link.name}
-                    {/* Minimal underline effect */}
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-300"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
-                    />
-                  </Link>
+                <motion.div key={link.name} variants={itemVariants}>
+                  {link.name === "Contact" ? (
+                    <a
+                      href="/contact"
+                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group ${
+                        scrolled 
+                          ? "text-gray-700 hover:text-gray-900" 
+                          : "text-white/90 hover:text-white"
+                      }`}
+                    >
+                      {link.name}
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-300"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: "100%" }}
+                      />
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.to}
+                      smooth={true}
+                      duration={800}
+                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group ${
+                        scrolled 
+                          ? "text-gray-700 hover:text-gray-900" 
+                          : "text-white/90 hover:text-white"
+                      }`}
+                    >
+                      {link.name}
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-300"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: "100%" }}
+                      />
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
           </div>
 
-          {/* Mobile Menu Button - Minimal */}
+          {/* Mobile Menu Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -138,7 +148,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu - Clean and professional */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -160,20 +170,29 @@ function Navbar() {
                   variants={itemVariants}
                   className="border-b border-gray-100 last:border-b-0"
                 >
-                  <Link
-                    to={link.to}
-                    smooth={true}
-                    duration={800}
-                    onClick={() => setIsOpen(false)}
-                    className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.name === "Contact" ? (
+                    <a
+                      href="/contact"
+                      onClick={() => setIsOpen(false)}
+                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.to}
+                      smooth={true}
+                      duration={800}
+                      onClick={() => setIsOpen(false)}
+                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </motion.div>
 
-            {/* Mobile Footer Info */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

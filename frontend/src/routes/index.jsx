@@ -1,7 +1,7 @@
 // src/routes/index.jsx
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";
-//import ContactPage from "../pages/ContactPage";
+import ContactPage from "../pages/contactPage";
 import BlogList from "../pages/BlogList";
 import BlogDetail from "../pages/BlogDetail";
 import AdminLogin from "../pages/AdminLogin";
@@ -13,7 +13,7 @@ const AppRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
-      {/* <Route path="/contact" element={<ContactPage />} /> */}
+      <Route path="/contact" element={<ContactPage />} />
       <Route path="/blog" element={<BlogList />} />
       <Route path="/blog/:id" element={<BlogDetail />} />
       <Route path="/admin/login" element={<AdminLogin />} />
