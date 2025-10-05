@@ -89,7 +89,7 @@ function ContactPage() {
     <section 
       id="contact" 
       ref={ref}
-      className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 overflow-hidden"
+      className="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 overflow-hidden"
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
