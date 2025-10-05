@@ -16,9 +16,8 @@ const app = express();
 
 // Allow all origins (works for testing and Vercel frontend)
 app.use(cors({
-  origin: "*", // your Vercel frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  
+  origin: "*",
+  credentials: true,
 }));
 
 app.use(express.json());
