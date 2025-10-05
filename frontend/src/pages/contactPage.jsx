@@ -89,9 +89,16 @@ function ContactPage() {
     <section 
       id="contact" 
       ref={ref}
-      className="relative  bg-gray-300 text-gray-900 overflow-hidden"
+      className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 -left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 -right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20">
         
         {/* Header Section */}
         <motion.div
@@ -101,23 +108,25 @@ function ContactPage() {
           className="mb-20 text-center"
         >
           <motion.div variants={itemVariants} className="mb-8">
-            <div className="w-20 h-px bg-gray-300 mb-6 mx-auto"></div>
-            <h2 className="text-sm font-medium text-gray-500 tracking-widest uppercase">
+            <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mb-6 mx-auto"></div>
+            <h2 className="text-sm font-semibold text-cyan-400 tracking-widest uppercase">
               Get In Touch
             </h2>
           </motion.div>
 
           <motion.h3
             variants={itemVariants}
-            className="text-4xl md:text-6xl font-light mb-8 leading-tight"
+            className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight"
           >
             Let's Create
             <br />
-            <span className="text-gray-400">Something Amazing</span>
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Something Amazing
+            </span>
           </motion.h3>
 
           <motion.div variants={itemVariants} className="max-w-2xl mx-auto">
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-xl text-gray-300 leading-relaxed">
               Ready to bring your vision to life? Let's discuss how we can help 
               transform your ideas into exceptional products and experiences.
             </p>
@@ -131,9 +140,9 @@ function ContactPage() {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="space-y-12"
+            className="space-y-8"
           >
-            {contactInfo.map((info) => (
+            {contactInfo.map((info, index) => (
               <motion.div
                 key={info.title}
                 variants={itemVariants}
@@ -141,43 +150,51 @@ function ContactPage() {
                 whileHover={{ x: 10 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="flex items-start space-x-6">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
-                    {info.icon}
+                <motion.div 
+                  className="bg-gray-800/30 backdrop-blur-md border border-gray-700 rounded-2xl p-6 hover:border-cyan-500/50 transition-all duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="flex items-start space-x-6">
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300"
+                      whileHover={{ rotate: 5 }}
+                    >
+                      {info.icon}
+                    </motion.div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-semibold text-white mb-3">
+                        {info.title}
+                      </h4>
+                      {info.details.map((detail, idx) => (
+                        <p 
+                          key={idx}
+                          className="text-gray-300 hover:text-cyan-400 transition-colors duration-300"
+                        >
+                          {detail}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-medium text-gray-900 mb-3">
-                      {info.title}
-                    </h4>
-                    {info.details.map((detail, idx) => (
-                      <p 
-                        key={idx}
-                        className="text-gray-600 hover:text-gray-900 transition-colors duration-300"
-                      >
-                        {detail}
-                      </p>
-                    ))}
-                  </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
 
             {/* Social Links */}
             <motion.div
               variants={itemVariants}
-              className="pt-8 border-t border-gray-200"
+              className="pt-8 border-t border-gray-700"
             >
-              <h4 className="text-lg font-medium text-gray-900 mb-6">
+              <h4 className="text-lg font-semibold text-white mb-6">
                 Follow Our Work
               </h4>
-              <div className="flex space-x-6">
+              <div className="flex space-x-4">
                 {[{ icon: <FaLinkedin />, label: "LinkedIn", url: "#" },
                   { icon: <FaTwitter />, label: "Twitter", url: "#" }]
                   .map((social) => (
                     <motion.a
                       key={social.label}
                       href={social.url}
-                      className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-all duration-300"
+                      className="w-12 h-12 bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:border-cyan-500 hover:bg-cyan-500/20 transition-all duration-300"
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -194,96 +211,98 @@ function ContactPage() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <motion.form
-              onSubmit={handleSubmit}
-              className="space-y-8"
+            <motion.div
               variants={itemVariants}
+              className="bg-gray-800/30 backdrop-blur-md border border-gray-700 rounded-2xl p-8"
             >
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-3">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                  placeholder="Your full name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-3">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300"
-                  placeholder="your.email@company.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-3">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="6"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 resize-none"
-                  placeholder="Tell us about your project..."
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-gray-900 text-white font-medium text-lg rounded-lg transition-all duration-300 hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
               >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <motion.span
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="mr-2"
-                    >
-                      ⏳
-                    </motion.span>
-                    Sending...
-                  </span>
-                ) : (
-                  "Send Message"
-                )}
-              </motion.button>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-3">
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500/50 transition-all duration-300"
+                    placeholder="Your full name"
+                  />
+                </div>
 
-              {status && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-lg text-center ${
-                    status.includes("Thank you") 
-                      ? "bg-green-50 text-green-700 border border-green-200" 
-                      : "bg-red-50 text-red-700 border border-red-200"
-                  }`}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500/50 transition-all duration-300"
+                    placeholder="your.email@company.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-3">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows="6"
+                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500/50 transition-all duration-300 resize-none"
+                    placeholder="Tell us about your project..."
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-lg rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                  whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                 >
-                  {status}
-                </motion.div>
-              )}
-            </motion.form>
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                      />
+                      Sending Message...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
+                </motion.button>
+
+                {status && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-xl text-center border backdrop-blur-md ${
+                      status.includes("Thank you") 
+                        ? "bg-green-500/20 text-green-200 border-green-500/30" 
+                        : "bg-red-500/20 text-red-200 border-red-500/30"
+                    }`}
+                  >
+                    {status}
+                  </motion.div>
+                )}
+              </form>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -292,26 +311,12 @@ function ContactPage() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-center mt-20 pt-20 border-t border-gray-200"
+          className="text-center mt-20 pt-20 border-t border-gray-700"
         >
-          <p className="text-gray-500">
+          <p className="text-gray-400">
             We typically respond to all inquiries within 24 hours during business days.
           </p>
         </motion.div>
-      </div>
-
-      {/* Minimal Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)`,
-            backgroundSize: '80px 80px',
-          }}
-        />
-        <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-gray-100"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-gray-100"></div>
       </div>
     </section>
   );

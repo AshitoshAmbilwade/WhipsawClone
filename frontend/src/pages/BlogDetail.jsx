@@ -141,7 +141,7 @@ function BlogDetail() {
   const readingTime = getReadingTime(post.content);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-1000 to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800">
       {/* Modern Glass Navigation */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}

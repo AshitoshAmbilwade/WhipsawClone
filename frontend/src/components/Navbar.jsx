@@ -3,10 +3,13 @@ import { Link } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { HiLightningBolt } from "react-icons/hi";
+import { User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -83,7 +86,7 @@ function Navbar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-6">
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -95,7 +98,7 @@ function Navbar() {
                   {link.name === "Contact" ? (
                     <a
                       href="/contact"
-                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group ${
+                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group cursor-pointer ${
                         scrolled 
                           ? "text-gray-700 hover:text-gray-900" 
                           : "text-white/90 hover:text-white"
@@ -113,7 +116,7 @@ function Navbar() {
                       to={link.to}
                       smooth={true}
                       duration={800}
-                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group ${
+                      className={`relative font-medium text-sm tracking-wide transition-all duration-300 group cursor-pointer ${
                         scrolled 
                           ? "text-gray-700 hover:text-gray-900" 
                           : "text-white/90 hover:text-white"
@@ -129,6 +132,26 @@ function Navbar() {
                   )}
                 </motion.div>
               ))}
+            </motion.div>
+
+            {/* Admin Login Button - Gradient */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <motion.button
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 10px 30px rgba(79,70,229,0.4)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/admin/login")}
+                className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-white px-5 py-2 rounded-lg font-semibold border border-transparent shadow-lg flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Admin Login
+              </motion.button>
             </motion.div>
           </div>
 
@@ -146,6 +169,7 @@ function Navbar() {
             {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
           </motion.button>
         </div>
+        
       </div>
 
       {/* Mobile Menu */}
@@ -174,7 +198,7 @@ function Navbar() {
                     <a
                       href="/contact"
                       onClick={() => setIsOpen(false)}
-                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg"
+                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg cursor-pointer"
                     >
                       {link.name}
                     </a>
@@ -184,13 +208,37 @@ function Navbar() {
                       smooth={true}
                       duration={800}
                       onClick={() => setIsOpen(false)}
-                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg"
+                      className="block py-4 text-gray-700 hover:text-gray-900 font-medium transition-colors text-lg cursor-pointer"
                     >
                       {link.name}
                     </Link>
                   )}
                 </motion.div>
               ))}
+
+              {/* Admin Login Button in Mobile Menu - Gradient */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="mt-4"
+              >
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 10px 30px rgba(79,70,229,0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    navigate("/admin/login");
+                    setIsOpen(false);
+                  }}
+                  className="w-full bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-white px-5 py-3 rounded-lg font-semibold border border-transparent shadow-lg flex items-center justify-center gap-2"
+                >
+                  <User className="w-4 h-4" />
+                  Admin Login
+                </motion.button>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -206,6 +254,7 @@ function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </motion.nav>
   );
 }

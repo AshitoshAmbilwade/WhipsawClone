@@ -116,7 +116,7 @@ function BlogList() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-1000 to-gray-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 relative overflow-hidden">
       {/* Animated background elements */}
       <motion.div
         initial={{ opacity: 0 }}
