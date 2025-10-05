@@ -14,7 +14,13 @@ connectDB(); // Connect to MongoDB
 
 const app = express();
 
-app.use(cors());
+// Allow all origins (works for testing and Vercel frontend)
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Routes
