@@ -11,8 +11,8 @@ export const sendContactForm = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // App password (not your Gmail password!)
+        user: process.env.EMAIL_USER || "ashitoshambilwade1289@gmail.com",
+        pass: process.env.EMAIL_PASS || "ligg yzlg nqiu pmxc", // App password (not your Gmail password!)
       },
     });
 
