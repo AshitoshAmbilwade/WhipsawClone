@@ -16,7 +16,7 @@ const app = express();
 
 // Allow all origins (works for testing and Vercel frontend)
 app.use(cors({
-  origin: "*",
+  origin: "https://whipsaw-clone-eight.vercel.app", // your Vercel frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
